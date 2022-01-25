@@ -11,8 +11,13 @@ fn main() {
         .collect();
     let name = String::from("node_modules-") + &noise;
     let path = temp_dir().join(name);
-    if let Err(e) = rename("node_modules", path) {
-        eprintln!("Could not throw away node_modules: {e}");
-        std::process::exit(1);
+    match rename("node_modules", path) {
+        Ok(()) => {
+            println!("👋 bye node_modules!");
+        }
+        Err(e) => {
+            eprintln!("Could not throw away node_modules: {e}");
+            std::process::exit(1);
+        }
     }
 }
